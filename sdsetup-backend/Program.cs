@@ -66,31 +66,31 @@ namespace sdsetup_backend {
                 //use temporary variables so if anything goes wrong, values wont be out of sync.
                 Dictionary<string, string> _Manifests = new Dictionary<string, string>();
 
-                string _Temp = Environment.CurrentDirectory + "\\temp";
-                string _Files = Environment.CurrentDirectory + "\\files";
-                string _Config = Environment.CurrentDirectory + "\\config";
+                string _Temp = Environment.CurrentDirectory + "/temp";
+                string _Files = Environment.CurrentDirectory + "/files";
+                string _Config = Environment.CurrentDirectory + "/config";
 
                 if (!Directory.Exists(_Temp)) Directory.CreateDirectory(_Temp);
                 if (!Directory.Exists(_Files)) Directory.CreateDirectory(_Files);
                 if (!Directory.Exists(_Config)) Directory.CreateDirectory(_Config);
-                if (!File.Exists(_Config + "\\latestpackageset.txt")) File.WriteAllText(_Config + "\\latestpackageset.txt", "default");
-                if (!File.Exists(_Config + "\\validchannels.txt")) File.WriteAllLines(_Config + "\\validchannels.txt", new string[] { "latest", "nightly" });
+                if (!File.Exists(_Config + "/latestpackageset.txt")) File.WriteAllText(_Config + "/latestpackageset.txt", "default");
+                if (!File.Exists(_Config + "/validchannels.txt")) File.WriteAllLines(_Config + "/validchannels.txt", new string[] { "latest", "nightly" });
 
                 foreach(string n in Directory.EnumerateDirectories(_Files )) {
-                    string k = n.Split('\\').Last();
-                    if (!File.Exists(_Files + "\\" + k + "\\manifest6.json")) File.WriteAllText(_Files + "\\" + k + "\\manifest6.json", "{}");
+                    string k = n.Split('/').Last();
+                    if (!File.Exists(_Files + "/" + k + "/manifest6.json")) File.WriteAllText(_Files + "/" + k + "/manifest6.json", "{}");
                 }
 
-                string _latestPackageset = File.ReadAllText(_Config + "\\latestpackageset.txt");
-                string[] _validChannels = File.ReadAllLines(_Config + "\\validchannels.txt");
+                string _latestPackageset = File.ReadAllText(_Config + "/latestpackageset.txt");
+                string[] _validChannels = File.ReadAllLines(_Config + "/validchannels.txt");
 
                 //look away
                 foreach (string n in Directory.EnumerateDirectories(_Files)) {
-                    string k = n.Split('\\').Last();
-                    Manifest m = JsonConvert.DeserializeObject<Manifest>(File.ReadAllText(_Files + "\\" + k + "\\manifest6.json"));
-                    foreach (string c in Directory.EnumerateDirectories(_Files + "\\" + k)) {
-                        string f = c.Split('\\').Last();
-                        Package p = JsonConvert.DeserializeObject<Package>(File.ReadAllText(_Files + "\\" + k + "\\" + f + "\\info.json"));
+                    string k = n.Split('/').Last();
+                    Manifest m = JsonConvert.DeserializeObject<Manifest>(File.ReadAllText(_Files + "/" + k + "/manifest6.json"));
+                    foreach (string c in Directory.EnumerateDirectories(_Files + "/" + k)) {
+                        string f = c.Split('/').Last();
+                        Package p = JsonConvert.DeserializeObject<Package>(File.ReadAllText(_Files + "/" + k + "/" + f + "/info.json"));
                         m.Platforms[p.Platform].PackageSections[p.Section].Categories[p.Category].Subcategories[p.Subcategory].Packages[p.ID] = p;
                     }
                     _Manifests[k] = JsonConvert.SerializeObject(m, Formatting.Indented);
@@ -112,9 +112,9 @@ namespace sdsetup_backend {
         }
 
         public static bool OverridePrivelegedUuid() {
-            if (File.Exists(Config + "\\uuidoverride.txt")) {
-                privelegedUUID = File.ReadAllText(Config + "\\uuidoverride.txt");
-                File.Delete(Config + "\\uuidoverride.txt");
+            if (File.Exists(Config + "/uuidoverride.txt")) {
+                privelegedUUID = File.ReadAllText(Config + "/uuidoverride.txt");
+                File.Delete(Config + "/uuidoverride.txt");
                 return true;
             }
             return false;

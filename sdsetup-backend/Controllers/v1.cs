@@ -21,12 +21,12 @@ namespace sdsetup_backend.Controllers {
                 return new ObjectResult("UUID " + uuid + " locked");
             } else if (!Program.validChannels.Contains(channel)) {
                 return new ObjectResult("Invalid channel");
-            } else if (!Directory.Exists(Program.Files + "\\" + packageset)) {
+            } else if (!Directory.Exists(Program.Files + "/" + packageset)) {
                 return new ObjectResult("Invalid packageset");
-            } else if (System.IO.File.Exists(Program.Files + "\\" + packageset + "\\.PRIVELEGED.FLAG") && !Program.IsUuidPriveleged(uuid)) {
+            } else if (System.IO.File.Exists(Program.Files + "/" + packageset + "/.PRIVILEGED.FLAG") && !Program.IsUuidPriveleged(uuid)) {
                 return new ObjectResult("You do not have access to that packageset");
             } else {
-                string tempdir = Program.Temp + "\\" + uuid;
+                string tempdir = Program.Temp + "/" + uuid;
                 try {
                     //Program.uuidLocks.Add(uuid);
 
@@ -37,14 +37,14 @@ namespace sdsetup_backend.Controllers {
                     List<KeyValuePair<string, string>> files = new List<KeyValuePair<string, string>>();
                     foreach (string k in requestedPackages) {
                         //sanitize input
-                        if (k.Contains("\\") || k.Contains("/") || k.Contains("..") || k.Contains("~") || k.Contains("%")) {
+                        if (k.Contains("/") || k.Contains("/") || k.Contains("..") || k.Contains("~") || k.Contains("%")) {
                             Program.uuidLocks.Remove(uuid);
                             return new ObjectResult("hackerman");
                         }
 
-                        if (Directory.Exists(Program.Files + "\\" + packageset + "\\" + k + "\\" + channel)) {
-                            foreach (string f in EnumerateAllFiles(Program.Files + "\\" + packageset + "\\" + k + "\\" + channel)) {
-                                files.Add(new KeyValuePair<string, string>(f.Replace(Program.Files + "\\" + packageset + "\\" + k + "\\" + channel, ""), f));
+                        if (Directory.Exists(Program.Files + "/" + packageset + "/" + k + "/" + channel)) {
+                            foreach (string f in EnumerateAllFiles(Program.Files + "/" + packageset + "/" + k + "/" + channel)) {
+                                files.Add(new KeyValuePair<string, string>(f.Replace(Program.Files + "/" + packageset + "/" + k + "/" + channel, ""), f));
                             }
                         }
                     }
@@ -64,9 +64,9 @@ namespace sdsetup_backend.Controllers {
 
         [HttpGet("fetch/manifest/{uuid}/{packageset}")]
         public ActionResult FetchManifest(string uuid, string packageset) {
-            if (!Directory.Exists(Program.Files + "\\" + packageset)) {
+            if (!Directory.Exists(Program.Files + "/" + packageset)) {
                 return new ObjectResult(packageset);
-            } else if (System.IO.File.Exists(Program.Files + "\\" + packageset + "\\.PRIVELEGED.FLAG") && !Program.IsUuidPriveleged(uuid)) {
+            } else if (System.IO.File.Exists(Program.Files + "/" + packageset + "/.PRIVILEGED.FLAG") && !Program.IsUuidPriveleged(uuid)) {
                 return new ObjectResult("You do not have access to that packageset");
             }
 
@@ -114,7 +114,7 @@ namespace sdsetup_backend.Controllers {
 
         public static Stream ZipFromFilestreams(KeyValuePair<string, string>[] files) {
 
-            DeletingFileStream outputMemStream = new DeletingFileStream(Program.Temp + "\\" + Guid.NewGuid().ToString().Replace("-", "").ToLower(), FileMode.Create);
+            DeletingFileStream outputMemStream = new DeletingFileStream(Program.Temp + "/" + Guid.NewGuid().ToString().Replace("-", "").ToLower(), FileMode.Create);
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
             zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
