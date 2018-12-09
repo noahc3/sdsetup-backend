@@ -15,12 +15,16 @@ namespace sdsetup_backend {
 
         public static Dictionary<string, string> Manifests;
 
+        
+
         public static string Temp;
         public static string Files;
         public static string Config;
 
         public static string[] validChannels;
         public static List<string> uuidLocks = new List<string>();
+
+        public static Dictionary<string, DeletingFileStream> generatedZips = new Dictionary<string, DeletingFileStream>();
 
         public static string latestPackageset = "default";
 

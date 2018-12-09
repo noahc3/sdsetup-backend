@@ -28,10 +28,7 @@ namespace sdsetup_backend.Controllers {
             } else {
                 string tempdir = Program.Temp + "/" + uuid;
                 try {
-                    //Program.uuidLocks.Add(uuid);
-
-                    string zipname = ("SDSetup(" + DateTime.Now.ToShortDateString() + ").zip").Replace("-", ".");
-                    Response.Headers["Content-Disposition"] = "filename=" + zipname;
+                    Program.uuidLocks.Add(uuid);
 
                     string[] requestedPackages = packages.Split(';');
                     List<KeyValuePair<string, string>> files = new List<KeyValuePair<string, string>>();
@@ -49,15 +46,41 @@ namespace sdsetup_backend.Controllers {
                         }
                     }
 
-                    Stream stream = ZipFromFilestreams(files.ToArray());
-                    
+                    DeletingFileStream stream = (DeletingFileStream) ZipFromFilestreams(files.ToArray(), uuid);
+
+                    Program.generatedZips[uuid] = stream;
+                    stream.Timeout(30000);
 
                     Program.uuidLocks.Remove(uuid);
-                    return new FileStreamResult(stream, "application/zip");
+                    return new ObjectResult("READY");
                 } catch (Exception) {
                     Program.uuidLocks.Remove(uuid);
                     return new ObjectResult("Internal server error occurred");
                 }
+            }
+            
+        }
+
+        [HttpGet("fetch/generatedzip/{uuid}")]
+        public ActionResult FetchGeneratedZip(string uuid) {
+            try {
+                if (Program.generatedZips.ContainsKey(uuid)) {
+                    Program.generatedZips[uuid].StopTimeout();
+                    DeletingFileStream stream = Program.generatedZips[uuid];
+                    Program.generatedZips[uuid] = null;
+                    Program.generatedZips.Remove(uuid);
+                    if (stream == null) {
+                        return new ObjectResult("Expired");
+                    }
+                    string zipname = ("SDSetup(" + DateTime.Now.ToShortDateString() + ").zip").Replace("-", ".").Replace("_", ".");
+                    Response.Headers["Content-Disposition"] = "filename=" + zipname;
+                    return new FileStreamResult(stream, "application/zip");
+                } else {
+                    return new ObjectResult("Expired");
+                }
+            } catch (Exception) {
+                Program.generatedZips[uuid] = null;
+                return new ObjectResult("Expired");
             }
             
         }
@@ -112,9 +135,9 @@ namespace sdsetup_backend.Controllers {
         }
 
 
-        public static Stream ZipFromFilestreams(KeyValuePair<string, string>[] files) {
+        public static Stream ZipFromFilestreams(KeyValuePair<string, string>[] files, string uuid) {
 
-            DeletingFileStream outputMemStream = new DeletingFileStream(Program.Temp + "/" + Guid.NewGuid().ToString().Replace("-", "").ToLower(), FileMode.Create);
+            DeletingFileStream outputMemStream = new DeletingFileStream(Program.Temp + "/" + Guid.NewGuid().ToString().Replace("-", "").ToLower(), FileMode.Create, uuid);
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
             zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
