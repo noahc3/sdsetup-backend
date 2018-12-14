@@ -14,8 +14,24 @@ namespace sdsetup_backend.Controllers {
     [ApiController]
     public class v1 : ControllerBase {
         
-        [HttpGet("fetch/zip/{uuid}/{packageset}/{channel}/{packages}")]
-        public ActionResult FetchZip(string uuid, string packageset, string channel, string packages) {
+        [HttpGet("fetch/zip")]
+        public ActionResult FetchZip() {
+            //wtf microsoft use a string array
+            Microsoft.Extensions.Primitives.StringValues _uuid;
+            Microsoft.Extensions.Primitives.StringValues _packageset;
+            Microsoft.Extensions.Primitives.StringValues _channel;
+            Microsoft.Extensions.Primitives.StringValues _packages;
+
+            if (!Request.Headers.TryGetValue("SDSETUP-UUID", out _uuid)) return new StatusCodeResult(400);
+            if (!Request.Headers.TryGetValue("SDSETUP-PACKAGESET", out _packageset)) return new StatusCodeResult(400);
+            if (!Request.Headers.TryGetValue("SDSETUP-CHANNEL", out _channel)) return new StatusCodeResult(400);
+            if (!Request.Headers.TryGetValue("SDSETUP-PACKAGES", out _packages)) return new StatusCodeResult(400);
+
+            string uuid = _uuid[0];
+            string packageset = _packageset[0];
+            string channel = _channel[0];
+            string packages = _packages[0];
+
 
             if (Program.uuidLocks.Contains(uuid)) {
                 return new ObjectResult("UUID " + uuid + " locked");
