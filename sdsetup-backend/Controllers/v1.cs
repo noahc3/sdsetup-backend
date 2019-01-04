@@ -21,16 +21,23 @@ namespace sdsetup_backend.Controllers {
             Microsoft.Extensions.Primitives.StringValues _packageset;
             Microsoft.Extensions.Primitives.StringValues _channel;
             Microsoft.Extensions.Primitives.StringValues _packages;
+            Microsoft.Extensions.Primitives.StringValues _client;
 
             if (!Request.Headers.TryGetValue("SDSETUP-UUID", out _uuid)) return new StatusCodeResult(400);
             if (!Request.Headers.TryGetValue("SDSETUP-PACKAGESET", out _packageset)) return new StatusCodeResult(400);
             if (!Request.Headers.TryGetValue("SDSETUP-CHANNEL", out _channel)) return new StatusCodeResult(400);
             if (!Request.Headers.TryGetValue("SDSETUP-PACKAGES", out _packages)) return new StatusCodeResult(400);
+            Request.Headers.TryGetValue("SDSETUP-CLIENT", out _client); // optional, currently only used by homebrew app to specify it only wants SD folder
+
 
             string uuid = _uuid[0];
             string packageset = _packageset[0];
             string channel = _channel[0];
             string packages = _packages[0];
+            string client = null;
+            if (_client.Count > 0 && !String.IsNullOrWhiteSpace(_client[0])) {
+                client = _client[0];
+            }
 
 
             if (Program.uuidLocks.Contains(uuid)) {
@@ -57,7 +64,13 @@ namespace sdsetup_backend.Controllers {
 
                         if (Directory.Exists(Program.Files + "/" + packageset + "/" + k + "/" + channel)) {
                             foreach (string f in EnumerateAllFiles(Program.Files + "/" + packageset + "/" + k + "/" + channel)) {
-                                files.Add(new KeyValuePair<string, string>(f.Replace(Program.Files + "/" + packageset + "/" + k + "/" + channel, ""), f));
+                                if (client == "hbswitch") {
+                                    if (f.StartsWith(Program.Files + "/" + packageset + "/" + k + "/" + channel + "/sd")) {
+                                        files.Add(new KeyValuePair<string, string>(f.Replace(Program.Files + "/" + packageset + "/" + k + "/" + channel + "/sd", ""), f));
+                                    }
+                                } else {
+                                    files.Add(new KeyValuePair<string, string>(f.Replace(Program.Files + "/" + packageset + "/" + k + "/" + channel, ""), f));
+                                }
                             }
                         }
                     }
@@ -115,6 +128,18 @@ namespace sdsetup_backend.Controllers {
         [HttpGet("get/latestpackageset")]
         public ActionResult GetLatestPackageset() {
             return new ObjectResult(Program.latestPackageset);
+        }
+
+        [HttpGet("get/latestappversion/switch")]
+        public ActionResult GetLatestAppVersion() {
+            return new ObjectResult(Program.latestAppVersion);
+        }
+
+        [HttpGet("get/latestappdownload/switch")]
+        public ActionResult GetLatestAppDownload() {
+            string zipname = "sdsetup-switch.nro";
+            Response.Headers["Content-Disposition"] = "filename=" + zipname;
+            return new FileStreamResult(new FileStream(Program.Config + "/sdsetup-switch.nro", FileMode.Open, FileAccess.Read, FileShare.ReadWrite), "application/octet-stream");
         }
 
         [HttpGet("set/latestpackageset/{uuid}/{packageset}")]

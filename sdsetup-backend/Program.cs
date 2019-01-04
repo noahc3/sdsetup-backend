@@ -32,6 +32,7 @@ namespace sdsetup_backend {
         public static Dictionary<string, DeletingFileStream> generatedZips = new Dictionary<string, DeletingFileStream>();
 
         public static string latestPackageset = "default";
+        public static string latestAppVersion = "NO VERSION";
 
         private static string _privelegedUUID;
         private static string privelegedUUID {
@@ -98,6 +99,7 @@ namespace sdsetup_backend {
                 if (!Directory.Exists(_Files)) Directory.CreateDirectory(_Files);
                 if (!Directory.Exists(_Config)) Directory.CreateDirectory(_Config);
                 if (!File.Exists(_Config + "/latestpackageset.txt")) File.WriteAllText(_Config + "/latestpackageset.txt", "default");
+                if (!File.Exists(_Config + "/latestappversion.txt")) File.WriteAllText(_Config + "/latestappversion.txt", "NO VERSION");
                 if (!File.Exists(_Config + "/validchannels.txt")) File.WriteAllLines(_Config + "/validchannels.txt", new string[] { "latest", "nightly" });
 
                 foreach(string n in Directory.EnumerateDirectories(_Files )) {
@@ -106,6 +108,7 @@ namespace sdsetup_backend {
                 }
 
                 string _latestPackageset = File.ReadAllText(_Config + "/latestpackageset.txt");
+                string _latestAppVersion = File.ReadAllText(_Config + "/latestappversion.txt");
                 string[] _validChannels = File.ReadAllLines(_Config + "/validchannels.txt");
 
                 //look away
@@ -126,6 +129,7 @@ namespace sdsetup_backend {
                 Files = _Files;
                 Config = _Config;
                 latestPackageset = _latestPackageset;
+                latestAppVersion = _latestAppVersion;
                 validChannels = _validChannels;
                 Manifests = _Manifests;
 
