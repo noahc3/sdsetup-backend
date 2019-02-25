@@ -27,15 +27,23 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lblMasterPassword = new System.Windows.Forms.Label();
+            this.btnConfigureMasterPassword = new System.Windows.Forms.Button();
             this.btnServerEdit = new System.Windows.Forms.Button();
             this.btnServerDelete = new System.Windows.Forms.Button();
             this.btnServerAdd = new System.Windows.Forms.Button();
             this.listboxServers = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnConfigureMasterPassword = new System.Windows.Forms.Button();
-            this.lblMasterPassword = new System.Windows.Forms.Label();
+            this.txtDebug = new System.Windows.Forms.TextBox();
+            this.txtGuideDir = new System.Windows.Forms.TextBox();
+            this.lblGuideDir = new System.Windows.Forms.Label();
+            this.btnBrowsePrivateKey = new System.Windows.Forms.Button();
+            this.btnPushPublic = new System.Windows.Forms.Button();
+            this.btnPushPublicTest = new System.Windows.Forms.Button();
+            this.btnPushPrivateTesting = new System.Windows.Forms.Button();
+            this.btnBuild = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +73,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnBuild);
+            this.tabPage2.Controls.Add(this.btnPushPrivateTesting);
+            this.tabPage2.Controls.Add(this.btnPushPublicTest);
+            this.tabPage2.Controls.Add(this.btnPushPublic);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -75,6 +87,9 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnBrowsePrivateKey);
+            this.tabPage3.Controls.Add(this.lblGuideDir);
+            this.tabPage3.Controls.Add(this.txtGuideDir);
             this.tabPage3.Controls.Add(this.lblMasterPassword);
             this.tabPage3.Controls.Add(this.btnConfigureMasterPassword);
             this.tabPage3.Controls.Add(this.btnServerEdit);
@@ -88,6 +103,25 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Config";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lblMasterPassword
+            // 
+            this.lblMasterPassword.AutoSize = true;
+            this.lblMasterPassword.Location = new System.Drawing.Point(8, 167);
+            this.lblMasterPassword.Name = "lblMasterPassword";
+            this.lblMasterPassword.Size = new System.Drawing.Size(162, 13);
+            this.lblMasterPassword.TabIndex = 6;
+            this.lblMasterPassword.Text = "Master Password Not Configured";
+            // 
+            // btnConfigureMasterPassword
+            // 
+            this.btnConfigureMasterPassword.Location = new System.Drawing.Point(11, 183);
+            this.btnConfigureMasterPassword.Name = "btnConfigureMasterPassword";
+            this.btnConfigureMasterPassword.Size = new System.Drawing.Size(192, 23);
+            this.btnConfigureMasterPassword.TabIndex = 5;
+            this.btnConfigureMasterPassword.Text = "Configure Master Password";
+            this.btnConfigureMasterPassword.UseVisualStyleBackColor = true;
+            this.btnConfigureMasterPassword.Click += new System.EventHandler(this.btnConfigureMasterPassword_Click);
             // 
             // btnServerEdit
             // 
@@ -136,44 +170,95 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Server Config";
             // 
-            // textBox1
+            // txtDebug
             // 
-            this.textBox1.Location = new System.Drawing.Point(4, 354);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(796, 276);
-            this.textBox1.TabIndex = 1;
+            this.txtDebug.Location = new System.Drawing.Point(4, 354);
+            this.txtDebug.Multiline = true;
+            this.txtDebug.Name = "txtDebug";
+            this.txtDebug.ReadOnly = true;
+            this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDebug.Size = new System.Drawing.Size(796, 276);
+            this.txtDebug.TabIndex = 1;
             // 
-            // btnConfigureMasterPassword
+            // txtGuideDir
             // 
-            this.btnConfigureMasterPassword.Location = new System.Drawing.Point(11, 183);
-            this.btnConfigureMasterPassword.Name = "btnConfigureMasterPassword";
-            this.btnConfigureMasterPassword.Size = new System.Drawing.Size(192, 23);
-            this.btnConfigureMasterPassword.TabIndex = 5;
-            this.btnConfigureMasterPassword.Text = "Configure Master Password";
-            this.btnConfigureMasterPassword.UseVisualStyleBackColor = true;
-            this.btnConfigureMasterPassword.Click += new System.EventHandler(this.btnConfigureMasterPassword_Click);
+            this.txtGuideDir.Location = new System.Drawing.Point(209, 25);
+            this.txtGuideDir.Name = "txtGuideDir";
+            this.txtGuideDir.Size = new System.Drawing.Size(575, 20);
+            this.txtGuideDir.TabIndex = 7;
+            this.txtGuideDir.TextChanged += new System.EventHandler(this.txtGuideDir_TextChanged);
             // 
-            // lblMasterPassword
+            // lblGuideDir
             // 
-            this.lblMasterPassword.AutoSize = true;
-            this.lblMasterPassword.Location = new System.Drawing.Point(8, 167);
-            this.lblMasterPassword.Name = "lblMasterPassword";
-            this.lblMasterPassword.Size = new System.Drawing.Size(162, 13);
-            this.lblMasterPassword.TabIndex = 6;
-            this.lblMasterPassword.Text = "Master Password Not Configured";
+            this.lblGuideDir.AutoSize = true;
+            this.lblGuideDir.Location = new System.Drawing.Point(206, 9);
+            this.lblGuideDir.Name = "lblGuideDir";
+            this.lblGuideDir.Size = new System.Drawing.Size(135, 13);
+            this.lblGuideDir.TabIndex = 8;
+            this.lblGuideDir.Text = "Local Guide Build Directory";
+            // 
+            // btnBrowsePrivateKey
+            // 
+            this.btnBrowsePrivateKey.Location = new System.Drawing.Point(709, 51);
+            this.btnBrowsePrivateKey.Name = "btnBrowsePrivateKey";
+            this.btnBrowsePrivateKey.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowsePrivateKey.TabIndex = 9;
+            this.btnBrowsePrivateKey.Text = "Browse";
+            this.btnBrowsePrivateKey.UseVisualStyleBackColor = true;
+            this.btnBrowsePrivateKey.Click += new System.EventHandler(this.btnBrowsePrivateKey_Click);
+            // 
+            // btnPushPublic
+            // 
+            this.btnPushPublic.Location = new System.Drawing.Point(8, 235);
+            this.btnPushPublic.Name = "btnPushPublic";
+            this.btnPushPublic.Size = new System.Drawing.Size(776, 23);
+            this.btnPushPublic.TabIndex = 0;
+            this.btnPushPublic.Text = "Push Build to Public";
+            this.btnPushPublic.UseVisualStyleBackColor = true;
+            this.btnPushPublic.Click += new System.EventHandler(this.btnPushPublic_Click);
+            // 
+            // btnPushPublicTest
+            // 
+            this.btnPushPublicTest.Location = new System.Drawing.Point(8, 264);
+            this.btnPushPublicTest.Name = "btnPushPublicTest";
+            this.btnPushPublicTest.Size = new System.Drawing.Size(776, 23);
+            this.btnPushPublicTest.TabIndex = 1;
+            this.btnPushPublicTest.Text = "Push Build to Public Testing";
+            this.btnPushPublicTest.UseVisualStyleBackColor = true;
+            this.btnPushPublicTest.Click += new System.EventHandler(this.btnPushPublicTest_Click);
+            // 
+            // btnPushPrivateTesting
+            // 
+            this.btnPushPrivateTesting.Location = new System.Drawing.Point(8, 293);
+            this.btnPushPrivateTesting.Name = "btnPushPrivateTesting";
+            this.btnPushPrivateTesting.Size = new System.Drawing.Size(776, 23);
+            this.btnPushPrivateTesting.TabIndex = 2;
+            this.btnPushPrivateTesting.Text = "Push Build to Private Testing";
+            this.btnPushPrivateTesting.UseVisualStyleBackColor = true;
+            this.btnPushPrivateTesting.Click += new System.EventHandler(this.btnPushPrivateTesting_Click);
+            // 
+            // btnBuild
+            // 
+            this.btnBuild.Location = new System.Drawing.Point(8, 169);
+            this.btnBuild.Name = "btnBuild";
+            this.btnBuild.Size = new System.Drawing.Size(776, 23);
+            this.btnBuild.TabIndex = 3;
+            this.btnBuild.Text = "Build Guide";
+            this.btnBuild.UseVisualStyleBackColor = true;
+            this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 632);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtDebug);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
@@ -192,9 +277,16 @@
         private System.Windows.Forms.Button btnServerAdd;
         private System.Windows.Forms.ListBox listboxServers;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDebug;
         private System.Windows.Forms.Label lblMasterPassword;
         private System.Windows.Forms.Button btnConfigureMasterPassword;
+        private System.Windows.Forms.Label lblGuideDir;
+        private System.Windows.Forms.TextBox txtGuideDir;
+        private System.Windows.Forms.Button btnBrowsePrivateKey;
+        private System.Windows.Forms.Button btnBuild;
+        private System.Windows.Forms.Button btnPushPrivateTesting;
+        private System.Windows.Forms.Button btnPushPublicTest;
+        private System.Windows.Forms.Button btnPushPublic;
     }
 }
 
