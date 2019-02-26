@@ -12,11 +12,13 @@ namespace sdsetup_backend_control_panel.Types {
         public Dictionary<string, ServerConfig> Servers;
 
         public string GuideSourceDirectory = "";
+        public string BackendSourceDirectory = "";
 
         public Config() {
             MasterPasswordHash = "";
             Servers = new Dictionary<string, ServerConfig>();
             GuideSourceDirectory = "";
+            BackendSourceDirectory = "";
         }
 
         public Config(Config template) {
@@ -28,7 +30,8 @@ namespace sdsetup_backend_control_panel.Types {
                 Servers[k.UUID] = new ServerConfig(k);
             }
 
-            GuideSourceDirectory = "";
+            GuideSourceDirectory = template.GuideSourceDirectory;
+            BackendSourceDirectory = template.BackendSourceDirectory;
         }
     }
 }

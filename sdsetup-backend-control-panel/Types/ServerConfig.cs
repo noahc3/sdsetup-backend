@@ -21,6 +21,7 @@ namespace sdsetup_backend_control_panel.Types {
         public bool AskForPrivateKeyPassphraseEachRun = true;
 
         public string BackendDirectory = "";
+        public string BackendTestingDirectory = "";
         public string GuideDirectory = "";
         public string PublicTestingGuideDirectory = "";
         public string PrivateTestingGuideDirectory = "";
@@ -44,12 +45,13 @@ namespace sdsetup_backend_control_panel.Types {
             AskForPrivateKeyPassphraseEachRun = template.AskForPrivateKeyPassphraseEachRun;
 
             BackendDirectory = template.BackendDirectory;
+            BackendTestingDirectory = template.BackendTestingDirectory;
             GuideDirectory = template.GuideDirectory;
             PublicTestingGuideDirectory = template.PublicTestingGuideDirectory;
             PrivateTestingGuideDirectory = template.PrivateTestingGuideDirectory;
         }
 
-        public ServerConfig(string hostname, string username, string password, string privateKeyPath, string privateKeyPassphrase, string uUID, bool usesKeyBasedAuthentication, bool askForPasswordEachRun, bool askForPrivateKeyPassphraseEachRun, string backendDirectory, string guideDirectory, string publicTestingGuideDirectory, string privateTestingGuideDirectory) {
+        public ServerConfig(string hostname, string username, string password, string privateKeyPath, string privateKeyPassphrase, string uUID, bool usesKeyBasedAuthentication, bool askForPasswordEachRun, bool askForPrivateKeyPassphraseEachRun, string backendDirectory, string backendTestingDirectory, string guideDirectory, string publicTestingGuideDirectory, string privateTestingGuideDirectory) {
             Hostname = hostname;
             Username = username;
             Password = password;
@@ -60,6 +62,7 @@ namespace sdsetup_backend_control_panel.Types {
             AskForPasswordEachRun = askForPasswordEachRun;
             AskForPrivateKeyPassphraseEachRun = askForPrivateKeyPassphraseEachRun;
             BackendDirectory = backendDirectory;
+            BackendTestingDirectory = backendTestingDirectory;
             GuideDirectory = guideDirectory;
             PublicTestingGuideDirectory = publicTestingGuideDirectory;
             PrivateTestingGuideDirectory = privateTestingGuideDirectory;

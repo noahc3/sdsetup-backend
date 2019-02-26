@@ -59,6 +59,7 @@ namespace sdsetup_backend_control_panel {
             cbxAskPassphrase.Checked = conf.AskForPrivateKeyPassphraseEachRun;
 
             txtBackendDir.Text = conf.BackendDirectory;
+            txtBackendTestingDir.Text = conf.BackendTestingDirectory;
             txtGuideDir.Text = conf.GuideDirectory;
             txtPubTestingDir.Text = conf.PublicTestingGuideDirectory;
             txtPrivTestingDir.Text = conf.PrivateTestingGuideDirectory;
@@ -79,6 +80,7 @@ namespace sdsetup_backend_control_panel {
             conf.AskForPrivateKeyPassphraseEachRun = cbxAskPassphrase.Checked;
 
             conf.BackendDirectory = txtBackendDir.Text;
+            conf.BackendTestingDirectory = txtBackendTestingDir.Text;
             conf.GuideDirectory = txtGuideDir.Text;
             conf.PublicTestingGuideDirectory = txtPubTestingDir.Text;
             conf.PrivateTestingGuideDirectory = txtPrivTestingDir.Text;

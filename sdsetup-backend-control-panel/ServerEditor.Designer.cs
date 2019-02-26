@@ -49,6 +49,8 @@
             this.txtPubTestingDir = new System.Windows.Forms.TextBox();
             this.lblPrivTestingGuideDir = new System.Windows.Forms.Label();
             this.txtPrivTestingDir = new System.Windows.Forms.TextBox();
+            this.lblBackendTestingDir = new System.Windows.Forms.Label();
+            this.txtBackendTestingDir = new System.Windows.Forms.TextBox();
             this.panelPrivateKey.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +63,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(290, 543);
+            this.btnSave.Location = new System.Drawing.Point(290, 584);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 8;
@@ -150,7 +152,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(209, 543);
+            this.btnCancel.Location = new System.Drawing.Point(209, 584);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 9;
@@ -161,7 +163,7 @@
             // 
             this.lblUUID.AutoSize = true;
             this.lblUUID.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUUID.Location = new System.Drawing.Point(7, 553);
+            this.lblUUID.Location = new System.Drawing.Point(7, 594);
             this.lblUUID.Name = "lblUUID";
             this.lblUUID.Size = new System.Drawing.Size(37, 13);
             this.lblUUID.TabIndex = 12;
@@ -236,7 +238,7 @@
             // lblGuideDir
             // 
             this.lblGuideDir.AutoSize = true;
-            this.lblGuideDir.Location = new System.Drawing.Point(9, 407);
+            this.lblGuideDir.Location = new System.Drawing.Point(9, 446);
             this.lblGuideDir.Name = "lblGuideDir";
             this.lblGuideDir.Size = new System.Drawing.Size(80, 13);
             this.lblGuideDir.TabIndex = 16;
@@ -244,7 +246,7 @@
             // 
             // txtGuideDir
             // 
-            this.txtGuideDir.Location = new System.Drawing.Point(12, 423);
+            this.txtGuideDir.Location = new System.Drawing.Point(12, 462);
             this.txtGuideDir.Name = "txtGuideDir";
             this.txtGuideDir.Size = new System.Drawing.Size(353, 20);
             this.txtGuideDir.TabIndex = 15;
@@ -252,7 +254,7 @@
             // lblPubTestingGuideDir
             // 
             this.lblPubTestingGuideDir.AutoSize = true;
-            this.lblPubTestingGuideDir.Location = new System.Drawing.Point(9, 446);
+            this.lblPubTestingGuideDir.Location = new System.Drawing.Point(9, 485);
             this.lblPubTestingGuideDir.Name = "lblPubTestingGuideDir";
             this.lblPubTestingGuideDir.Size = new System.Drawing.Size(150, 13);
             this.lblPubTestingGuideDir.TabIndex = 18;
@@ -260,7 +262,7 @@
             // 
             // txtPubTestingDir
             // 
-            this.txtPubTestingDir.Location = new System.Drawing.Point(12, 462);
+            this.txtPubTestingDir.Location = new System.Drawing.Point(12, 501);
             this.txtPubTestingDir.Name = "txtPubTestingDir";
             this.txtPubTestingDir.Size = new System.Drawing.Size(353, 20);
             this.txtPubTestingDir.TabIndex = 17;
@@ -268,7 +270,7 @@
             // lblPrivTestingGuideDir
             // 
             this.lblPrivTestingGuideDir.AutoSize = true;
-            this.lblPrivTestingGuideDir.Location = new System.Drawing.Point(9, 485);
+            this.lblPrivTestingGuideDir.Location = new System.Drawing.Point(9, 524);
             this.lblPrivTestingGuideDir.Name = "lblPrivTestingGuideDir";
             this.lblPrivTestingGuideDir.Size = new System.Drawing.Size(154, 13);
             this.lblPrivTestingGuideDir.TabIndex = 20;
@@ -276,16 +278,34 @@
             // 
             // txtPrivTestingDir
             // 
-            this.txtPrivTestingDir.Location = new System.Drawing.Point(12, 501);
+            this.txtPrivTestingDir.Location = new System.Drawing.Point(12, 540);
             this.txtPrivTestingDir.Name = "txtPrivTestingDir";
             this.txtPrivTestingDir.Size = new System.Drawing.Size(353, 20);
             this.txtPrivTestingDir.TabIndex = 19;
+            // 
+            // lblBackendTestingDir
+            // 
+            this.lblBackendTestingDir.AutoSize = true;
+            this.lblBackendTestingDir.Location = new System.Drawing.Point(9, 407);
+            this.lblBackendTestingDir.Name = "lblBackendTestingDir";
+            this.lblBackendTestingDir.Size = new System.Drawing.Size(179, 13);
+            this.lblBackendTestingDir.TabIndex = 22;
+            this.lblBackendTestingDir.Text = "SDSetup Backend Testing Directory";
+            // 
+            // txtBackendTestingDir
+            // 
+            this.txtBackendTestingDir.Location = new System.Drawing.Point(12, 423);
+            this.txtBackendTestingDir.Name = "txtBackendTestingDir";
+            this.txtBackendTestingDir.Size = new System.Drawing.Size(353, 20);
+            this.txtBackendTestingDir.TabIndex = 21;
             // 
             // ServerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 578);
+            this.ClientSize = new System.Drawing.Size(377, 619);
+            this.Controls.Add(this.lblBackendTestingDir);
+            this.Controls.Add(this.txtBackendTestingDir);
             this.Controls.Add(this.lblPrivTestingGuideDir);
             this.Controls.Add(this.txtPrivTestingDir);
             this.Controls.Add(this.lblPubTestingGuideDir);
@@ -343,5 +363,7 @@
         private System.Windows.Forms.TextBox txtPubTestingDir;
         private System.Windows.Forms.Label lblPrivTestingGuideDir;
         private System.Windows.Forms.TextBox txtPrivTestingDir;
+        private System.Windows.Forms.Label lblBackendTestingDir;
+        private System.Windows.Forms.TextBox txtBackendTestingDir;
     }
 }
